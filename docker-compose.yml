@@ -1,0 +1,13 @@
+version: '3'
+services:
+  node:
+    build:
+      context: .
+    command: [sh, -c, npm run dev]
+    ports:
+      - "3030:3000"
+    volumes:
+      - ".:/myapp"
+      - "node_modules:/usr/local/node_modules"
+volumes:
+  node_modules:
