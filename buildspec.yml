@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Install step
+      - npm install -g n
+      - n stable
+      - npm update -g npm
+      - node -v
+      - npm -v
+  pre_build:
+    commands:
+      - echo Pre_build step
+      - npm install
+  build:
+    commands:
+      - echo Build step
+      - npm run build
+  post_build:
+    commands:
+      - aws s3 sync build/ s3://code-deploy-sample-hitsolb111081 --exclude '*.DS_Store' --acl public-read --cache-control public,max-age=604800
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: out
